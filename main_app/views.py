@@ -25,3 +25,7 @@ class FoodsDetailsView(APIView):
         foods =self.get_object(pk)
         serializer=HealthyFoodsSerializers(foods)
         return Response(serializer.data , status = 200)
+    def delete(self,request,pk):
+        foods =self.get_object(pk)
+        foods.delete()
+        return Response(status=204)
