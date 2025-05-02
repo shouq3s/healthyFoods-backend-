@@ -7,8 +7,8 @@ class HealthyFoods(models.Model):
     Protien = models.IntegerField()
     Fiber = models.IntegerField()
     Ingredients = models.TextField(max_length=555)
-    image_url = models.CharField(max_length=255)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image_url = models.CharField(max_length=255,null=True, blank=True)
+    
 
     def __str__(self):
         return f'{self.foodName} - {self.calories} Cals'

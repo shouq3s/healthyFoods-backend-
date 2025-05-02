@@ -13,7 +13,7 @@ from .serializers import HealthyFoodsSerializers
 
 # Create your views here.
 class FoodsListCreateView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     def get(self,request):
         Foods = HealthyFoods.objects.all()
         serializer = HealthyFoodsSerializers(Foods, many=True)
@@ -26,7 +26,7 @@ class FoodsListCreateView(APIView):
         return Response(serializer.errors, status=400)
 
 class FoodsDetailsView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     def get_object(self,pk):
         #saves us from calling get_object_or_404 in every method  
         return get_object_or_404(HealthyFoods,pk=pk)
