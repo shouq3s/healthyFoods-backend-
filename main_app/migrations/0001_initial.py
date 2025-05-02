@@ -20,6 +20,7 @@ class Migration(migrations.Migration):
                 ('calories', models.IntegerField()),
                 ('Protien', models.IntegerField()),
                 ('Fiber', models.IntegerField()),
+                ('image_url',models.CharField(blank=True, max_length=255, null=True)),
             ],
         ),
     ]
