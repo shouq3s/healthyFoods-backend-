@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 class HealthyFoods(models.Model):
     foodName = models.CharField(max_length=250)
@@ -8,6 +8,7 @@ class HealthyFoods(models.Model):
     Fiber = models.IntegerField()
     Ingredients = models.TextField(max_length=555)
     image_url = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.foodName} - {self.calories} Cals'
