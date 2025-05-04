@@ -81,6 +81,17 @@ class DrinksListCreateView(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400) 
     
+class DrinksDetailsView(APIView):
+    permission_classes = [AllowAny]
+    def get_object(self,pk):
+        return get_object_or_404(healthyDrinks,pk=pk)
+    
+    def get(self,request,pk):
+        drinks =self.get_object(pk)
+        serializer=HealthyDrinksSerializers(drinks)
+        return Response(serializer.data , status = 200)
+    
+
 class SignUpView(APIView):
     permission_classes = [AllowAny]
     # When we recieve a POST request with username, email, and password. Create a new user.
