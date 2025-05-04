@@ -18,3 +18,13 @@ class HealthyFoods(models.Model):
 
     def __str__(self):
         return f'{self.foodName} - {self.calories} Cals'
+    
+class healthyDrinks(models.Model):
+    image_url = models.CharField(max_length=255,null=True, blank=True)
+    drinkname= models.CharField(max_length=250)
+    calories = models.IntegerField()
+    Protien = models.IntegerField()    
+    Ingredients = models.TextField(max_length=555)
+   
+    def __str__(self):
+        return f'{self.drinkname} - {self.calories} Cals'
