@@ -90,6 +90,10 @@ class DrinksDetailsView(APIView):
         drinks =self.get_object(pk)
         serializer=HealthyDrinksSerializers(drinks)
         return Response(serializer.data , status = 200)
+    def delete(self,request,pk):
+        drinks =self.get_object(pk)
+        drinks.delete()
+        return Response(status=204)
     
 
 class SignUpView(APIView):
