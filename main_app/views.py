@@ -33,8 +33,10 @@ def add_collection_to_foods(request, foods_id, collection_id):
     except:
         return Response({'error': 'Something went wrong'}, status=500)
 class FoodsListCreateView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
+    
     def get(self,request):
+        #user=request.user
         Foods = HealthyFoods.objects.all()
         serializer = HealthyFoodsSerializers(Foods, many=True)
         return Response(serializer.data,status=200) 
@@ -46,7 +48,7 @@ class FoodsListCreateView(APIView):
         return Response(serializer.errors, status=400)
 
 class FoodsDetailsView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     def get_object(self,pk):
         #saves us from calling get_object_or_404 in every method  
         return get_object_or_404(HealthyFoods,pk=pk)
@@ -69,9 +71,15 @@ class FoodsDetailsView(APIView):
 class DrinksListCreateView(APIView):
     permission_classes = [AllowAny]
     def get(self,request):
-        Foods = healthyDrinks.objects.all()
-        serializer = HealthyDrinksSerializers(Foods, many=True)
-        return Response(serializer.data,status=200)     
+        drinks = healthyDrinks.objects.all()
+        serializer = HealthyDrinksSerializers(drinks, many=True)
+        return Response(serializer.data,status=200)    
+    def post(self,request):
+        serializer = HealthyDrinksSerializers(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400) 
     
 class SignUpView(APIView):
     permission_classes = [AllowAny]
