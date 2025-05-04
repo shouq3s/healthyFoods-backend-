@@ -1,7 +1,17 @@
 from rest_framework import serializers
-from .models import HealthyFoods
+from .models import HealthyFoods,Collection
+
+from rest_framework import serializers
+from .models import HealthyFoods, Collection
+# i used the code from https://www.django-rest-framework.org/api-guide/relations/#nested-relationships
+class CollectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Collection
+        fields = '__all__'
 
 class HealthyFoodsSerializers(serializers.ModelSerializer):
+    collection = CollectionSerializer(many=True, read_only=True)
+    
     class Meta:
         model = HealthyFoods
         fields = '__all__'

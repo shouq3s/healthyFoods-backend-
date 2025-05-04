@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.core.exceptions import ValidationError
@@ -8,12 +9,32 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 
 from django.shortcuts import get_object_or_404
-from .models import HealthyFoods
-from .serializers import HealthyFoodsSerializers
+from .models import HealthyFoods,Collection
+from .serializers import HealthyFoodsSerializers,CollectionSerializer
+from rest_framework.generics import ListAPIView
 
 # Create your views here.
+# i took this code from https://medium.com/@sydney.idundun/understanding-views-in-django-rest-framework-d78ca8042f04
+class CollectionList(ListAPIView):
+    permission_classes = [AllowAny]  
+    queryset = Collection.objects.all()
+    serializer_class = CollectionSerializer
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def add_collection_to_foods(request, foods_id, collection_id):
+    try:
+        foods = HealthyFoods.objects.get(pk=foods_id)
+        collection = Collection.objects.get(pk=collection_id)
+        foods.collection.add(collection)
+        return Response({'message': 'Collection was Added!'}, status=200)
+    except HealthyFoods.DoesNotExist:
+        return Response({'error': 'The foods Does Not Exist'}, status=404)
+    except Collection.DoesNotExist:
+        return Response({'error': 'The Collection Does Not Exist'}, status=404)
+    except:
+        return Response({'error': 'Something went wrong'}, status=500)
 class FoodsListCreateView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     def get(self,request):
         Foods = HealthyFoods.objects.all()
         serializer = HealthyFoodsSerializers(Foods, many=True)
@@ -26,7 +47,7 @@ class FoodsListCreateView(APIView):
         return Response(serializer.errors, status=400)
 
 class FoodsDetailsView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     def get_object(self,pk):
         #saves us from calling get_object_or_404 in every method  
         return get_object_or_404(HealthyFoods,pk=pk)
@@ -77,3 +98,5 @@ class SignUpView(APIView):
             },
             status=201
         )
+    
+
