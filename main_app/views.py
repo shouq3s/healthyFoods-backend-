@@ -1,7 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.core.exceptions import ValidationError
@@ -9,8 +8,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 
 from django.shortcuts import get_object_or_404
-from .models import HealthyFoods,Collection
-from .serializers import HealthyFoodsSerializers,CollectionSerializer
+from .models import HealthyFoods,Collection,healthyDrinks
+from .serializers import HealthyFoodsSerializers,CollectionSerializer,HealthyDrinksSerializers
 from rest_framework.generics import ListAPIView
 
 # Create your views here.
@@ -67,6 +66,11 @@ class FoodsDetailsView(APIView):
             serializer.save()
             return Response(serializer.data, status=201)#return the updated it to the api
         return Response(serializer.errors, status=400)
+class DrinksListCreateView(APIView):
+    def get(self,request):
+        Foods = healthyDrinks.objects.all()
+        serializer = HealthyDrinksSerializers(Foods, many=True)
+        return Response(serializer.data,status=200)     
     
 class SignUpView(APIView):
     permission_classes = [AllowAny]

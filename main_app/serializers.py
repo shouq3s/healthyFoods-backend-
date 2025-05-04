@@ -16,7 +16,7 @@ class HealthyFoodsSerializers(serializers.ModelSerializer):
         model = HealthyFoods
         fields = '__all__'
 
-class HealthyDrinkssSerializers(serializers.ModelSerializer):
+class HealthyDrinksSerializers(serializers.ModelSerializer):
     class Meta:
         model = healthyDrinks
         fields = '__all__'        
