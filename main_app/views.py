@@ -67,6 +67,7 @@ class FoodsDetailsView(APIView):
             return Response(serializer.data, status=201)#return the updated it to the api
         return Response(serializer.errors, status=400)
 class DrinksListCreateView(APIView):
+    permission_classes = [AllowAny]
     def get(self,request):
         Foods = healthyDrinks.objects.all()
         serializer = HealthyDrinksSerializers(Foods, many=True)
