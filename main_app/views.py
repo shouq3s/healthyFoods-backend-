@@ -32,6 +32,25 @@ def add_collection_to_foods(request, foods_id, collection_id):
         return Response({'error': 'The Collection Does Not Exist'}, status=404)
     except:
         return Response({'error': 'Something went wrong'}, status=500)
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def remove_collection_from_foods(request, foods_id, collection_id):
+    try:
+    
+        foods = HealthyFoods.objects.get(pk=foods_id)
+        collection = Collection.objects.get(pk=collection_id)
+        if foods.collection.filter(id=collection.id).exists():
+            foods.collection.remove(collection)
+            return Response({'message': 'collection was Removed!'}, status=200)
+        else:
+            return Response({'message': 'The collection is in the DB but it is not on the foods!'})
+    except HealthyFoods.DoesNotExist:
+        return Response({'error': 'The foods Does Not Exist'}, status=404)
+    except Collection.DoesNotExist:
+        return Response({'error': 'The collection Does Not Exist'}, status=404)
+    except:
+        return Response({'error': 'Something went wrong'}, status=500)
+
 class FoodsListCreateView(APIView):
     permission_classes = [IsAuthenticated]
     
