@@ -16,11 +16,11 @@ from rest_framework.generics import ListAPIView
 # Create your views here.
 # i took this code from https://medium.com/@sydney.idundun/understanding-views-in-django-rest-framework-d78ca8042f04
 class CollectionList(ListAPIView):
-    permission_classes = [AllowAny]  
+    permission_classes = [IsAuthenticated]  
     queryset = Collection.objects.all()
     serializer_class = CollectionSerializer
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def add_collection_to_foods(request, foods_id, collection_id):
     try:
         foods = HealthyFoods.objects.get(pk=foods_id)
@@ -89,7 +89,7 @@ class FoodsDetailsView(APIView):
             return Response(serializer.data, status=201)#return the updated it to the api
         return Response(serializer.errors, status=400)
 class DrinksListCreateView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     def get(self,request):
         drinks = healthyDrinks.objects.all()
         serializer = HealthyDrinksSerializers(drinks, many=True)
@@ -102,7 +102,7 @@ class DrinksListCreateView(APIView):
         return Response(serializer.errors, status=400) 
     
 class DrinksDetailsView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     def get_object(self,pk):
         return get_object_or_404(healthyDrinks,pk=pk)
     
