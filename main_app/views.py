@@ -6,10 +6,11 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.core.exceptions import ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
-
+from rest_framework import generics, status, permissions
+from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 from .models import HealthyFoods,Collection,healthyDrinks
-from .serializers import HealthyFoodsSerializers,CollectionSerializer,HealthyDrinksSerializers
+from .serializers import HealthyFoodsSerializers,CollectionSerializer,HealthyDrinksSerializers,UserSerializer
 from rest_framework.generics import ListAPIView
 
 # Create your views here.
@@ -152,5 +153,19 @@ class SignUpView(APIView):
             },
             status=201
         )
-    
 
+class LoginView(APIView):
+  permission_classes = [AllowAny]
+  def post(self, request):
+    try:
+      username = request.data.get('username')
+      password = request.data.get('password')
+      user = authenticate(username=username, password=password)
+      if user:
+        refresh = RefreshToken.for_user(user)
+        content = {'refresh': str(refresh), 'access': str(refresh.access_token),'user': UserSerializer(user).data}
+        return Response(content, status=status.HTTP_200_OK)
+      return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+    except Exception as err:
+      return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
