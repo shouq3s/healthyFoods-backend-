@@ -15,6 +15,7 @@ class HealthyFoods(models.Model):
     Ingredients = models.TextField(max_length=555)
     image_url = models.CharField(max_length=255,null=True, blank=True)
     collection = models.ManyToManyField(Collection,null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
 
     def __str__(self):
