@@ -157,10 +157,12 @@ class SignUpView(APIView):
 class LoginView(APIView):
   permission_classes = [AllowAny]
   def post(self, request):
+
     try:
       username = request.data.get('username')
       password = request.data.get('password')
       user = authenticate(username=username, password=password)
+    
       if user:
         refresh = RefreshToken.for_user(user)
         content = {'refresh': str(refresh), 'access': str(refresh.access_token),'user': UserSerializer(user).data}
@@ -168,4 +170,5 @@ class LoginView(APIView):
       return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
     except Exception as err:
       return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
     
