@@ -12,7 +12,7 @@ What It Does:
 - django
 - django rest frame work
 - CORS
-## Backend Repository link:
+## Frontend Repository link:
 [Healthy-Foods-frontend](https://git.generalassemb.ly/shouqAlbalawi/healthyFoods-frontend.git)
 ## Getting Started/Code Installation
 
