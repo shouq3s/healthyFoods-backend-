@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.core.exceptions import ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
-from rest_framework import generics, status, permissions
+from rest_framework import  status
 from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 from .models import HealthyFoods,Collection,healthyDrinks
@@ -34,7 +34,7 @@ def add_collection_to_foods(request, foods_id, collection_id):
     except:
         return Response({'error': 'Something went wrong'}, status=500)
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def remove_collection_from_foods(request, foods_id, collection_id):
     try:
     
