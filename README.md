@@ -46,6 +46,22 @@ To clone the project up and running on your local machine, follow these instruct
 ### Routing table 
 ![Routingtable ](/images/Routing.png)
 
+## HealthyFoods Routes
+|Method| url | description|
+|------|-----|----------------|
+|GET|/HealthyFoods| diaplay all the Healthy Foods|
+|POST| /HealthyFoods/| add a new foods|
+|GET|/HealthyFoods/:id | to get all the info of one food
+|PATCH| /healthyfoods/:id |update one of the foods
+|DELETE|/HealthyFoods/:id | delete one of the foods
+|GET|/collection| diaplay all the collection|
+|POST| /collection | add new collection 
+|POST| /healthyfoods/{id}/add-collection/{collection_id}/|	Add collection to food
+|POST| /healthyfoods/{id}/remove-collection/{collection_id}/ |Remove collection from food
+|POST|/signup| user registeration 
+|POST|/signup| user login 
+
+
 ### ERD Diagram
 ![ERDDiagram ](/images/ERD%20Diagram.png)
 
