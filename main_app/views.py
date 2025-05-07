@@ -86,7 +86,7 @@ class FoodsDetailsView(APIView):
         serializer=HealthyFoodsSerializers(foods,data=request.data)#JSON data that will comeing with the request
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=201)#return the updated it to the api
+            return Response(serializer.data, status=201)#return the update to the api
         return Response(serializer.errors, status=400)
     
 class DrinksListCreateView(APIView):
@@ -138,7 +138,6 @@ class SignUpView(APIView):
         except ValidationError as err:
             return Response({'error': err.messages}, status=400)
 
-        # Actually create the user
         user = User.objects.create_user(
             username=username,
             email=email,

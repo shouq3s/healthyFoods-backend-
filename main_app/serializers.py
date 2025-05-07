@@ -17,9 +17,8 @@ class UserSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             password=validated_data['password']  
         )
-      
         return user
-# i used the code from https://www.django-rest-framework.org/api-guide/relations/#nested-relationships
+
 class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Collection
