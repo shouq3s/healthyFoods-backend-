@@ -1,4 +1,4 @@
-# Project Description
+# Project  and Repository Description
 A Django REST Framework backend for managing healthy foods and drinks data.
 
 What It Does:
