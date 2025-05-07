@@ -27,7 +27,7 @@ class healthyDrinks(models.Model):
     calories = models.IntegerField()
     Protien = models.IntegerField()    
     Ingredients = models.TextField(max_length=555)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+   
     
    
     def __str__(self):

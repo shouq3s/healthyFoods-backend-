@@ -49,6 +49,5 @@ To clone the project up and running on your local machine, follow these instruct
 ### ERD Diagram
 ![ERDDiagram ](/images/ERD%20Diagram.png)
 
-
 ## Future Improvements
 - add eat time and workout module

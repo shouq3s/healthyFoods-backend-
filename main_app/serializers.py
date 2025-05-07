@@ -37,4 +37,4 @@ class HealthyDrinksSerializers(serializers.ModelSerializer):
     class Meta:
         model = healthyDrinks
         fields = '__all__'        
-        extra_kwargs = {'user': {'read_only': True}}  
+        

@@ -56,14 +56,14 @@ class FoodsListCreateView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self,request):
-        #user=request.user
+        #
         Foods = HealthyFoods.objects.all()
         serializer = HealthyFoodsSerializers(Foods, many=True)
         return Response(serializer.data,status=200) 
     def post(self,request):
         serializer = HealthyFoodsSerializers(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
@@ -88,6 +88,7 @@ class FoodsDetailsView(APIView):
             serializer.save()
             return Response(serializer.data, status=201)#return the updated it to the api
         return Response(serializer.errors, status=400)
+    
 class DrinksListCreateView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self,request):
