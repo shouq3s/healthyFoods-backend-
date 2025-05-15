@@ -13,7 +13,7 @@ What It Does:
 - django rest frame work
 - CORS
 ## Frontend Repository link:
-[Healthy-Foods-frontend](https://git.generalassemb.ly/shouqAlbalawi/healthyFoods-frontend.git)
+[Healthy-Foods-frontend](https://github.com/shouq3s/healthyFoods-frontend/tree/main)
 ## Getting Started/Code Installation
 
 To clone the project up and running on your local machine, follow these instructions:
